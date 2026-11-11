@@ -1,5 +1,7 @@
 % Compile with pdfLaTeX (also works with the default Overleaf compiler).
-% Self-contained: no external images or font files are required.
+% Keep the image assets and horse-frames.pdf beside this file.
+% The Motivation divider animates in desktop Acrobat Reader or Okular
+% with JavaScript enabled; browser/Overleaf previews may show a still frame.
 % Visual inspiration: https://www.instagram.com/p/DfXBRTqoBhW/
 \documentclass[aspectratio=169,11pt]{beamer}
 \usepackage[T1]{fontenc}
@@ -7,6 +9,7 @@
 \usepackage{mathpazo}
 \usepackage{amsmath,amssymb}
 \usepackage{tikz}
+\usepackage{animate}
 \usetikzlibrary{calc}
 \usefonttheme{serif}
 \usetikzlibrary{arrows.meta,positioning}
@@ -133,15 +136,32 @@
 \setbeamertemplate{itemize subitem}{\color{Violet}\tiny$\diamond$}
 
 % Section divider pages also serve as editable starting points for the talk.
-\newcommand{\sectiondivider}{%
+\newcommand{\sectiondivider}[1][Violet]{%
   \begin{frame}[c]
     \centering
     {\color{Rose}\large\thesection\par}
     \vspace{.35cm}
-    {\color{Violet}\LARGE\insertsectionhead\par}
+    {\color{#1}\LARGE\insertsectionhead\par}
     \vspace{.4cm}
     {\color{Gold}\rule{3cm}{.5pt}\par}
   \end{frame}}
+
+% Actual motion: all 15 pages of horse-frames.pdf play at 10 fps.
+% method=ocg lets the heading and violet veil appear above the animation.
+% Source and playback instructions: HORSE-ANIMATION.md.
+\newcommand{\horsemotionbackground}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[Midnight] (current page.south west)
+      rectangle (current page.north east);
+    \node[inner sep=0pt] at (current page.center) {%
+      \animategraphics[method=ocg,autoplay,loop,nomouse,poster=first,
+        width=\paperwidth,height=\paperheight,keepaspectratio]
+        {10}{horse-frames}{}{}%
+    };
+    \fill[Midnight,opacity=.65] (current page.south west)
+      rectangle (current page.north east);
+  \end{tikzpicture}%
+}
 
 % Custom title page: all lettering remains editable and selectable.
 \setbeamertemplate{title page}{%
@@ -189,7 +209,10 @@
 % The Summary and top toolbar update automatically after two compilations.
 % Insert your content frames after each divider.
 \section[Motivation]{Motivation}
-\sectiondivider
+\begingroup
+  \setbeamertemplate{background canvas}{\horsemotionbackground}
+  \sectiondivider[Paper]
+\endgroup
 
 \begin{frame}{Contradictions?}
     In the literature, two main types of interpretations of contradictions are distinguished:
