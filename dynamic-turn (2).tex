@@ -544,6 +544,29 @@ Anne has received no information distinguishing these worlds.
     
     \[\alpha := p \mid \neg\alpha \mid \circ\alpha \mid \alpha \land \alpha \mid \Box_i\alpha \mid [e]\alpha\]
 \end{frame}
+
+\begin{frame}{Action Models}
+An S5LFI1 {\em action model} $U$ is a structure $\langle \mathit{E}, \{\sim_i\}_{i\in N}, \mathrm{pre}\rangle$, such that $E$ is a set of \emph{actions}, $\sim_i$ is an equivalence relation for an agent $i$, and {\em precondition function} $\mathrm{pre}:\mathit{E} \mapsto \mathcal{L}_{AM}$ assigns a formula to each action. The formula $\mathrm{pre}(e)$ is the \emph{precondition} for the execution of the action $e$.
+\end{frame}
+\begin{frame}
+    \begin{block}{AMLFI1}
+   The logic AMLFI1 is characterized over the language $\mathcal{L}_{AM}$ by the axioms and rules of S5LFI1 plus the following axioms and rules:
+\[
+\begin{array}{l@{\qquad}l}
+AM1 & [U,e]p \equiv (\text{pre}(e) \rightarrow p)\\
+AM2 & [U,e]\neg\alpha \equiv (\text{pre}(e) \rightarrow \neg[U,e]\alpha)\\
+AM3 & [U,e]\bullet\alpha \equiv (\text{pre}(e) \rightarrow \bullet[U,e]\alpha)
+\\
+AM4 & [U,e](\alpha \land \beta)
+      \equiv ([U,e]\alpha \land [U,e]\beta)\\
+AM5 & [U,e]K_i\alpha
+      \equiv (\text{pre}(e) \rightarrow \bigwedge_{e \sim_i f} K_i[U,f]\alpha)\\
+RE  & \vdash\theta \equiv \gamma \Rightarrow\ \vdash\alpha \equiv \alpha(\theta/\gamma)
+\end{array}
+\]
+\end{block}
+We recall that $\equiv$ is strong equivalence, definable in LFI1 as $(\alpha \leftrightarrow \beta) \land (\neg\alpha \leftrightarrow \neg\beta)$.
+\end{frame}
 \section[Update Models]{Update Models}
 \sectiondivider
 
